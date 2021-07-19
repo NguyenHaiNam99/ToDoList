@@ -1,0 +1,14 @@
+.Footer {
+    display: flex;
+    background-color: rgb(221, 215, 215);
+}
+
+.Footer p{
+    flex-grow: 1;
+    margin-left: 5px;
+}
+
+.Footer button{
+    flex-grow: 2;
+    margin: 5px;
+}

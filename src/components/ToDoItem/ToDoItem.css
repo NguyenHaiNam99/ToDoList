@@ -1,0 +1,57 @@
+.ToDoItem {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 100;
+    border-bottom: 1px solid #d5d8de;
+    display: flex;
+    padding-left: 10px;
+}
+
+.DoneItem {
+    border-bottom: 1px solid #d5d8de;
+    display: flex;
+    padding-left: 10px;
+}
+
+.ToDoItem input {
+    margin: 0px;
+    padding: 10px;
+    flex-grow: 1;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    font-weight: 100;
+    border: none;
+}
+
+.ToDoItem input:active {
+    outline: none;
+    margin: auto;
+}
+
+.DoneItem input:active {
+    outline: none;
+    margin: auto;
+}
+
+.DoneItem input {
+    text-decoration: line-through;
+    margin-left: 10px;
+    margin: 0px;
+    opacity: 0.4;
+    padding: 10px;
+    flex-grow: 1;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    font-weight: 100;
+    border: none;
+}
+
+#delete {
+    margin-right: 10px;
+}
+
+
+
+
+

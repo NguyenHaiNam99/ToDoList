@@ -1,0 +1,15 @@
+.PageNumber {
+    margin: 10px;
+    display: flex;
+    flex-grow: 1;
+
+}
+
+.PageNumber p{
+    flex-grow: 2;
+    text-align: center;
+}
+
+.PageNumber button{
+    flex-grow: 1;
+}
