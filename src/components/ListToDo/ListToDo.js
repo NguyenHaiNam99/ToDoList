@@ -4,7 +4,8 @@ class ListToDo extends Component {
     constructor(props){
         super(props)
         this.state = {
-            listItem = []
+            listItem = [],
+            currentItem = 1
         }
     }
     render() {
