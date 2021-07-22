@@ -11,32 +11,27 @@ class Header extends Component {
         this.state = {
             newItem: "",
             optionHeader: "Add",
-            keyWord: ""
         }
     }
 
     onKeyDown(event) {
         const key = event.keyCode;
         const { optionHeader } = this.state;
-        const { addItem, filterList } = this.props;
+        const { addItem, search } = this.props;
         //const index = listItem.findIndex(e => e.id === currentItem);
         if (key === 13) {
             let { value } = event.target;
+            this.setState({
+                newItem: "",
+            });
             if (optionHeader === "Add") {
                 if (!value) {
                     return;
                 }
-                addItem(value);
-                this.setState({
-                    newItem: "",
-                })
+                addItem(value, optionHeader);
             } else if (optionHeader === "Search") {
-                this.setState({
-                    newItem: "",
-                    keyWord: value
-                })
-                filterList(value, optionHeader);             
-            } 
+                search(value, optionHeader)
+            }
             // else {
             //     copyList[index].title = value;
             //     this.setState({

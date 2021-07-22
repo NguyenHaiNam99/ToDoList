@@ -19,7 +19,8 @@ class App extends Component {
       id: 0,
       currentPage: 1,
       sizePerPage: 3,
-      currentItem: 0
+      currentItem: 0,
+      listFilter: []
     };
     this.inputRef = React.createRef();
     this.headerRef = React.createRef();
@@ -35,14 +36,15 @@ class App extends Component {
     })
   }
 
-  addItem(value){
+  addItem(value, optionHeader){
     const { listItem, id } = this.state;
     const copyList = [...listItem];
     const copyId = id + 1;
     copyList.push({ title: value, idDone: false, id });
     this.setState({
       listItem: copyList,
-      id: copyId
+      id: copyId,
+      currentState: optionHeader
     })    
   }
 
@@ -74,27 +76,14 @@ class App extends Component {
     })
   }
 
-  filterList(keyWord, optionHeader) {
-    const { currentState, listItem } = this.state;
-    let list = [...listItem];
-    if (optionHeader === "Add") {
-      switch (currentState) {
-        case 'Active':
-          list = listItem.filter(e => e.isDone === false);
-          return list;
-        case 'Completed':
-          list = listItem.filter(e => e.isDone === true);
-          return list;
-        default:
-          return list;
-      }
-    } else if (optionHeader === "Search") {
-      this.setState({
-        currentState: optionHeader
-      })
-      list = listItem.filter(e => e.title.toLowerCase().indexOf(keyWord.toLowerCase()) !== -1)
-      return list
-    } else return list;
+  search(keyWord, optionHeader){
+    const { listItem } = this.state;
+    const copyList = [...listItem];
+    const resultList = copyList.filter(e=>e.title.toLowerCase().indexOf(keyWord.toLowerCase()) !== -1);
+    this.setState({
+      listFilter: resultList,
+      currentState: optionHeader
+    })
   }
 
   countLeft() {
@@ -124,8 +113,8 @@ class App extends Component {
     })
   }
 
-
   clickItem(event, id) {
+    console.log(id)
     this.inputRef.current.focus();
     const { value } = event.target;
     this.setState({
@@ -135,22 +124,31 @@ class App extends Component {
     })
   }
 
+  filterOption(){
+    const { currentState, listItem, listFilter } = this.state;
+    switch (currentState) {
+      case "Search":
+        return listFilter;
+      default:
+        return listItem;
+    }
+  }
+
   render() {
-    const { listItem, id, currentPage, sizePerPage, currentItem } = this.state;
-    const listItem1 = this.filterList();
+    const { id, currentPage, sizePerPage, currentItem } = this.state;
+    const listResult = this.filterOption();
     const lastIndex = currentPage * sizePerPage;
     const firstIndex = lastIndex - sizePerPage;
-    const currentToDo = listItem1.slice(firstIndex, lastIndex);
-    const total = Math.ceil(listItem1.length / sizePerPage) || 1;
+    const currentToDo = listResult.slice(firstIndex, lastIndex);
+    const total = Math.ceil(listResult.length / sizePerPage) || 1;
     return (
       <div className="App">
         <Header ref={this.headerRef}
           inputRef={this.inputRef}
           id={id}
-          listItem={listItem}
           currentItem={currentItem}
           addItem={this.addItem}
-          filterList={this.filterList.bind(this)}
+          search={this.search.bind(this)}
         />
         {
           currentToDo.length > 0 ? currentToDo.map((e) =>
