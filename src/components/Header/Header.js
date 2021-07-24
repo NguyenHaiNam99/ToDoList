@@ -9,37 +9,37 @@ class Header extends Component {
         this.onChange = this.onChange.bind(this);
         this.selectOption = this.selectOption.bind(this);
         this.state = {
-            newItem: "",
-            optionHeader: "Add",
+            newItem: ""
         }
+    }
+
+    changeSate(newItem){
+        this.setState({
+            newItem
+        })
     }
 
     onKeyDown(event) {
         const key = event.keyCode;
-        const { optionHeader } = this.state;
-        const { addItem, search } = this.props;
+        const { listToDo, currentState } = this.props;
         //const index = listItem.findIndex(e => e.id === currentItem);
         if (key === 13) {
             let { value } = event.target;
             this.setState({
                 newItem: "",
             });
-            if (optionHeader === "Add") {
-                if (!value) {
-                    return;
-                }
-                addItem(value, optionHeader);
-            } else if (optionHeader === "Search") {
-                search(value, optionHeader)
+            switch (currentState) {
+                case "Search":
+                    listToDo.current.search(value);
+                    break;
+                case "Update":
+                    console.log(listToDo.current.state.currentItem)
+                    break;
+                default:
+                    if (!value) return;
+                    listToDo.current.addItem(value);
+                    break;
             }
-            // else {
-            //     copyList[index].title = value;
-            //     this.setState({
-            //         listItem: copyList,
-            //         newItem: "",
-            //         optionHeader: "Add"
-            //     })
-            // }
         }
     }
 
@@ -47,22 +47,24 @@ class Header extends Component {
         const { value } = event.target;
         this.setState({
             newItem: value
-        })
+        });
     }
 
     selectOption(event) {
         const { value } = event.target;
-        this.setState({
-            optionHeader: value
-        })
+        const { updateParentState } = this.props;
+        updateParentState(value);
     }
 
     render() {
-        const { inputRef } = this.props;
+        const { inputRef, currentState } = this.props;
         const { newItem } = this.state;
         return (
             <div className="Header">
                 <select onChange={this.selectOption}>
+                    {
+                    currentState === "Update" && <option >Update</option>
+                    }
                     <option>Add</option>
                     <option>Search</option>
                 </select>
