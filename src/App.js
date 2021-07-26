@@ -45,14 +45,22 @@ class App extends Component {
    }
 
    updateParentState(value) {
-      //const { optionHeader } = this.headerRef.current.state;
       this.setState({
          currentState: value
       })
    }
 
-   render() {
-      
+   reRender(){
+      this.forceUpdate();
+   }
+
+   // getPageNumber(){
+   //    const currentNum = this.pageNumber.current;
+   //    const currentPage = currentNum &&  currentNum.state.currentPage;
+   //    return currentPage;
+   // }
+
+   render() { 
       const { currentState } = this.state;
       return (
          <div className="App">
@@ -68,10 +76,10 @@ class App extends Component {
                ref={this.listToDo}
                headerRef={ this.headerRef }
                inputRef={this.inputRef}
-               focusOption={this.focusOption}
                pageNumber={this.pageNumber}
                pageOption={this.pageOption}
                currentState={currentState}
+               //currentPage = {this.getPageNumber.bind(this)()}
                updateParentState={this.updateParentState.bind(this)}
             />
             <span className="Page">
@@ -79,6 +87,7 @@ class App extends Component {
                   ref={this.pageOption}
                />
                <PageNumber
+                  reRender={this.reRender.bind(this)}
                   ref={this.pageNumber}
                />
             </span>

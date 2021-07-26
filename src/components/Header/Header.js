@@ -33,7 +33,7 @@ class Header extends Component {
                     listToDo.current.search(value);
                     break;
                 case "Update":
-                    console.log(listToDo.current.state.currentItem)
+                    //console.log(listToDo.current.state.currentItem)
                     break;
                 default:
                     if (!value) return;
